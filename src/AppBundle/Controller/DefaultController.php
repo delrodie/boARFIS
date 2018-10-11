@@ -18,4 +18,11 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
+
+    /**
+     * @Route("/backend/", name="backend")
+     */
+    public function backendAction(){
+        return $this->render('default/dashboard.html.twig');
+    }
 }

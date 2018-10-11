@@ -149,3 +149,10 @@ ivory_ck_editor:
         filebrowsers:
             - filebrowserImageBrowse
             - filebrowserImageUpload
+
+
+assetic:
+    debug: '%kernel.debug%'
+    use_controller : '%kernel.debug%'
+    filters:
+        cssrewrite: ~
