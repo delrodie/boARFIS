@@ -46,35 +46,6 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope"></i>
-                            <span class="label label-success">5</span>
-                        </a>
-                        <ul class="dropdown-menu scale-up">
-                            <li class="header">Message</li>
-                            <li>
-                                <ul class="menu inner-content-div">
-                                    <li><!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{ absolute_url(asset('backoffice/images/avatar.png'))}}" class="rounded-circle" alt="User Image">
-                                            </div>
-                                            <div class="mail-contnet">
-                                                <h4>
-                                                    Lorem Ipsum
-                                                    <small><i class="fa fa-clock-o"></i> 15 mins</small>
-                                                </h4>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end message -->
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">See all e-Mails</a></li>
-                        </ul>
-                    </li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

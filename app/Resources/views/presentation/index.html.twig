@@ -1,53 +1,56 @@
 {% extends 'backoffice.html.twig' %}
 
+{% block title %}{{ parent () }} Liste des presentations{% endblock %}
+
 {% block body %}
-    <h1>Presentations list</h1>
+    <section class="content-header">
+        <h1>Liste des presentations</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_presentation_index'))}}">presentations</a></li>
+            <li class="breadcrumb-item active">articles de presentation</li>
+        </ol>
+    </section>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Statut</th>
-                <th>Slug</th>
-                <th>Publiepar</th>
-                <th>Modifiepar</th>
-                <th>Publiele</th>
-                <th>Modifiele</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for presentation in presentations %}
-            <tr>
-                <td><a href="{{ path('backend_presentation_show', { 'id': presentation.id }) }}">{{ presentation.id }}</a></td>
-                <td>{{ presentation.titre }}</td>
-                <td>{{ presentation.description }}</td>
-                <td>{% if presentation.statut %}Yes{% else %}No{% endif %}</td>
-                <td>{{ presentation.slug }}</td>
-                <td>{{ presentation.publiePar }}</td>
-                <td>{{ presentation.modifiePar }}</td>
-                <td>{{ presentation.publieLe }}</td>
-                <td>{{ presentation.modifieLe }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('backend_presentation_show', { 'id': presentation.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('backend_presentation_edit', { 'id': presentation.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <!-- Main content -->
+    <section class="content">
 
-    <ul>
-        <li>
-            <a href="{{ path('backend_presentation_new') }}">Create a new presentation</a>
-        </li>
-    </ul>
+        <div class="box box-warning">
+            <div class="box-header text-right">
+                <a href="{{ absolute_url(path('backend_presentation_new'))}}" class="btn btn-social btn-primary"><i class="fa fa-plus"></i>Ajouter une presentation</a>
+            </div>
+
+            <div class="row">
+                {% for presentation in presentations %}
+                    <div class="col-md-12 col-lg-3">
+                        <div class="box box-default" style="height: 500px">
+                            <div class="box-body">
+                                <h4 class="card-title">
+                                    {% if presentation.statut %}
+                                        <span class="badge badge-success">Actif</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">Désactivé</span>
+                                    {% endif %}
+                                    {{ presentation.titre }}
+                                </h4>
+                                {{ presentation.description|raw }}
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ absolute_url(path('backend_presentation_edit', {'slug': presentation.slug})) }}" >
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i> Modifier</button>
+                                    </a>
+                                    <a href="{{ absolute_url(path('backend_presentation_show', {'slug': presentation.slug})) }}" >
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Consulter</button>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                {% else %}
+
+                {% endfor %}
+            </div>
+
+    </section>
 {% endblock %}

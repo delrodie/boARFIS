@@ -1,60 +1,58 @@
-{% extends 'base.html.twig' %}
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}{{ parent () }} {{ presentation.titre }}{% endblock %}
 
 {% block body %}
-    <h1>Presentation</h1>
+    <section class="content-header">
+        <h1>{{ presentation.titre }}</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_presentation_index'))}}">presentations</a></li>
+            <li class="breadcrumb-item active">{{ presentation.titre }}</li>
+        </ol>
+    </section>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ presentation.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ presentation.titre }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ presentation.description }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{% if presentation.statut %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ presentation.slug }}</td>
-            </tr>
-            <tr>
-                <th>Publiepar</th>
-                <td>{{ presentation.publiePar }}</td>
-            </tr>
-            <tr>
-                <th>Modifiepar</th>
-                <td>{{ presentation.modifiePar }}</td>
-            </tr>
-            <tr>
-                <th>Publiele</th>
-                <td>{{ presentation.publieLe }}</td>
-            </tr>
-            <tr>
-                <th>Modifiele</th>
-                <td>{{ presentation.modifieLe }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Main content -->
+    <section class="content">
 
-    <ul>
-        <li>
-            <a href="{{ path('backend_presentation_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('backend_presentation_edit', { 'id': presentation.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        <div class="box box-warning">
+            <div class="box-header text-right">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="{{ absolute_url(path('backend_presentation_edit', {'slug': presentation.slug})) }}" >
+                        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i> Modifier</button>
+                    </a>
+                    <a href="{{ absolute_url(path('backend_presentation_index')) }}" >
+                        <button type="button" class="btn btn-default"><i class="fa fa-list"></i> Liste des articles de presentation</button>
+                    </a>
+
+                    {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer cette presentation ?");'}}) }}
+                    <button type="submit" value="Supprimer" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Supprimer
+                    </button>
+                    {{ form_end(delete_form) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="box box-default">
+                        <div class="box-body">
+                            <h4 class="card-title">
+                                {% if presentation.statut %}
+                                    <span class="badge badge-success">Actif</span>
+                                {% else %}
+                                    <span class="badge badge-danger">Désactivé</span>
+                                {% endif %}
+                                {{ presentation.titre }}
+                            </h4>
+                            <p class="card-text">{{ presentation.description|raw }}</p>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
+
+    </section>
 {% endblock %}

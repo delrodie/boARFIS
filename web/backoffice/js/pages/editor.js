@@ -7,7 +7,7 @@
 //Add text editor
     $(function () {
 	//bootstrap WYSIHTML5 - text editor
-    $('#appbundle_biographie_contenu').wysihtml5();	
+    $('#appbundle_presentation_description').wysihtml5();
     $('.contenu').wysihtml5();		
 	
   });

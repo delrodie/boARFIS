@@ -48,7 +48,7 @@ class PresentationController extends Controller
             $em->persist($presentation);
             $em->flush();
 
-            return $this->redirectToRoute('backend_presentation_show', array('id' => $presentation->getId()));
+            return $this->redirectToRoute('backend_presentation_show', array('slug' => $presentation->getSlug()));
         }
 
         return $this->render('presentation/new.html.twig', array(
@@ -60,7 +60,7 @@ class PresentationController extends Controller
     /**
      * Finds and displays a presentation entity.
      *
-     * @Route("/{id}", name="backend_presentation_show")
+     * @Route("/{slug}", name="backend_presentation_show")
      * @Method("GET")
      */
     public function showAction(Presentation $presentation)
@@ -76,7 +76,7 @@ class PresentationController extends Controller
     /**
      * Displays a form to edit an existing presentation entity.
      *
-     * @Route("/{id}/edit", name="backend_presentation_edit")
+     * @Route("/{slug}/edit", name="backend_presentation_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Presentation $presentation)
@@ -88,7 +88,7 @@ class PresentationController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('backend_presentation_edit', array('id' => $presentation->getId()));
+            return $this->redirectToRoute('backend_presentation_show', array('slug' => $presentation->getSlug()));
         }
 
         return $this->render('presentation/edit.html.twig', array(
