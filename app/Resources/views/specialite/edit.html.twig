@@ -1,0 +1,87 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}{{ parent() }} Modification de spécialité{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Modification de spécialité</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_specialite_index'))}}">Spécialité</a></li>
+            <li class="breadcrumb-item active">Modification d'une spécialité</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="box box-warning">
+                <div class="box-header text-right">
+                    <a href="{{ absolute_url(path('backend_specialite_index'))}}" class="btn btn-social btn-primary"><i class="fa fa-list"></i>Liste des articles de Spécialités</a>
+                </div>
+                <div class="box-body">
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            {{ form_start(edit_form, {'attr':{'class':'form-horizontal'}}) }}
+                            <div class="form-group">
+                                <label class="col-sm-12 control-label text-left">Titre</label>
+                                <div class="col-sm-12">
+                                    {{ form_widget(edit_form.titre)}}
+                                    <span class="help-block">{{ form_errors(edit_form.titre)}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-12 control-label text-left">Contenu</label>
+                                <div class="col-sm-12">
+                                    {{ form_widget(edit_form.description)}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-12 control-label text-left">Icone</label>
+                                <div class="col-sm-12">
+                                    {{ form_widget(edit_form.icone)}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12 control-label text-left"></div>
+                                <div class="checkbox col-sm-12">
+                                    {{ form_widget(edit_form.statut)}}
+                                    <label for="appbundle_specialite_statut">Activé</label>
+                                </div>
+                            </div>
+                            {{ form_widget(edit_form) }}
+                            <div class="box-footer text-right">
+                                <a href="{{ absolute_url(path('backend_specialite_index')) }}" class="btn btn-default">Annuler</a>
+                                <button type="submit" class="btn btn-info">Modifier</button>
+                            </div>
+                            {{ form_end(edit_form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent()}}
+    {% stylesheets
+        'backoffice/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css'
+        'backoffice/tags/tagsinput.css'
+        filter='cssrewrite' output='backoffice/css/editeur.css'
+    %}
+        <link rel="stylesheet" href="{{ absolute_url(asset_url)}}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent()}}
+    {% javascripts
+        'backoffice/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js'
+        'backoffice/js/pages/editor.js'
+        'backoffice/tags/tagsinput.js'
+        output='backoffice/js/editeur.js'
+    %}
+        <script src="{{ absolute_url(asset_url)}}"></script>
+
+    {% endjavascripts %}
+{% endblock %}

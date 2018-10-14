@@ -1,0 +1,59 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}{{ parent () }} Liste des specialites{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Liste des specialites</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_specialite_index'))}}">specialites</a></li>
+            <li class="breadcrumb-item active">articles de specialite</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="box box-warning">
+            <div class="box-header text-right">
+                <a href="{{ absolute_url(path('backend_specialite_new'))}}" class="btn btn-social btn-primary"><i class="fa fa-plus"></i>Ajouter une specialite</a>
+            </div>
+
+            <div class="row">
+                {% for specialite in specialites %}
+                    <div class="col-md-12 col-lg-3">
+                        <div class="box box-default" style="height: 500px">
+                            <div class="box-body">
+                                <div class="text-center">
+                                    <i class="fa {{ specialite.icone }} fa-3x"></i>
+                                </div>
+                                <h4 class="card-title">
+                                    {% if specialite.statut %}
+                                        <span class="badge badge-success">Actif</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">Désactivé</span>
+                                    {% endif %}
+                                    {{ specialite.titre }}
+                                </h4>
+                                {{ specialite.description|raw }}
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ absolute_url(path('backend_specialite_edit', {'slug': specialite.slug})) }}" >
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i> Modifier</button>
+                                    </a>
+                                    <!--<a href="{{ absolute_url(path('backend_specialite_show', {'slug': specialite.slug})) }}" >
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Consulter</button>
+                                    </a>-->
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                {% else %}
+
+                {% endfor %}
+            </div>
+
+    </section>
+{% endblock %}
