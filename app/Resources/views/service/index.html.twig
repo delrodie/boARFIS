@@ -1,0 +1,56 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}{{ parent () }} Liste des services{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Liste des services</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_service_index'))}}">services</a></li>
+            <li class="breadcrumb-item active">articles de service</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="box box-warning">
+            <div class="box-header text-right">
+                <a href="{{ absolute_url(path('backend_service_new'))}}" class="btn btn-social btn-primary"><i class="fa fa-plus"></i>Ajouter un service</a>
+            </div>
+
+            <div class="row">
+                {% for service in services %}
+                    <div class="col-md-12 col-lg-3">
+                        <div class="box box-default" style="height: 500px">
+                            <div class="box-body">
+                                <h4 class="card-title">
+                                    {% if service.statut %}
+                                        <span class="badge badge-success">Actif</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">Désactivé</span>
+                                    {% endif %}
+                                    {{ service.titre }}
+                                </h4>
+                                {{ service.description|raw }}
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ absolute_url(path('backend_service_edit', {'slug': service.slug})) }}" >
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i> Modifier</button>
+                                    </a>
+                                    <!--<a href="{{ absolute_url(path('backend_service_show', {'slug': service.slug})) }}" >
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Consulter</button>
+                                    </a>-->
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                {% else %}
+
+                {% endfor %}
+            </div>
+
+    </section>
+{% endblock %}

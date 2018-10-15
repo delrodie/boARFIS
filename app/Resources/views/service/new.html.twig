@@ -1,0 +1,81 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}{{ parent() }} Enregistrement de service{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Enregistrement d'une nouvelle service</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_service_index'))}}">service</a></li>
+            <li class="breadcrumb-item active">Enregistrement d'un nouvel article</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="box box-warning">
+                <div class="box-header text-right">
+                    <a href="{{ absolute_url(path('backend_service_index'))}}" class="btn btn-social btn-primary"><i class="fa fa-list"></i>Liste des articles de services</a>
+                </div>
+                <div class="box-body">
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            {{ form_start(form, {'attr':{'class':'form-horizontal'}}) }}
+                            <div class="form-group">
+                                <label class="col-sm-12 control-label text-left">Titre</label>
+                                <div class="col-sm-12">
+                                    {{ form_widget(form.titre)}}
+                                    <span class="help-block">{{ form_errors(form.titre)}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-12 control-label text-left">Contenu</label>
+                                <div class="col-sm-12">
+                                    {{ form_widget(form.description)}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12 control-label text-left"></div>
+                                <div class="checkbox col-sm-12">
+                                    {{ form_widget(form.statut)}}
+                                    <label for="appbundle_service_statut">Activé</label>
+                                </div>
+                            </div>
+                            {{ form_widget(form) }}
+                            <div class="box-footer text-right">
+                                <button type="reset" class="btn btn-default">Annuler</button>
+                                <button type="submit" class="btn btn-info">Enregistrer</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent()}}
+    {% stylesheets
+        'backoffice/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css'
+        'backoffice/tags/tagsinput.css'
+        filter='cssrewrite' output='backoffice/css/editeur.css'
+    %}
+        <link rel="stylesheet" href="{{ absolute_url(asset_url)}}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent()}}
+    {% javascripts
+        'backoffice/assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js'
+        'backoffice/js/pages/editor.js'
+        'backoffice/tags/tagsinput.js'
+        output='backoffice/js/editeur.js'
+    %}
+        <script src="{{ absolute_url(asset_url)}}"></script>
+
+    {% endjavascripts %}
+{% endblock %}
