@@ -1,0 +1,77 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}Liste des contact{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Liste des contacts</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend_contact_index'))}}">Contacts</a></li>
+            <li class="breadcrumb-item active">Liste</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header text-right">
+                        <a href="{{ absolute_url(path('backend_contact_new'))}}" class="btn btn-social btn-primary"><i class="fa fa-plus"></i>Ajouter un nouveau contact</a>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 table-responsive" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="text-center">ID</th>
+                                <th class="text-center">LOCALISATION</th>
+                                <th class="text-center">CONTACT 1</th>
+                                <th class="text-center">CONTACT 2</th>
+                                <th class="text-center">EMAIL 1</th>
+                                <th class="text-center">EMAIL 2</th>
+                                <th class="text-center">ACTIONS</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for contact in contacts %}
+                                <tr>
+                                    <td class="text-right">{{ loop.index }}</td>
+                                    <td>{{ contact.localisation }}</td>
+                                    <td>{{ contact.contact1 }}</td>
+                                    <td>{{ contact.contact2 }}</td>
+                                    <td>{{ contact.email1 }}</td>
+                                    <td>{{ contact.email2 }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ absolute_url(path('backend_contact_edit', {'slug': contact.slug })) }}" class="text-primary" title="Modifier/Désactiver"><i class="fa fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">Aucun contact</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent ()}}
+    {% javascripts
+        'backend/assassets/vendor_components/datatables.net/js/jquery.dataTables.min.js'
+        'backend/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js'
+        'backend/assets/vendor_plugins/DataTables-1.10.15/ex-js/jszip.min.js'
+        'backend/js/pages/data-table.js'
+        output='backend/js/table.js'
+    %}
+        <script src="{{ absolute_url(asset_url)}}"></script>
+    {% endjavascripts %}
+{% endblock %}

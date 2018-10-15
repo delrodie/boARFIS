@@ -1,63 +1,92 @@
-{% extends 'base.html.twig' %}
+{% extends 'backoffice.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Users list</h1>
+    <section class="content-header">
+        <h1>Liste des utilsateurs</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('backend'))}}"><i class="fa fa-home"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ absolute_url(path('admin_user_index'))}}">Utilisateurs</a></li>
+            <li class="breadcrumb-item active">Liste</li>
+        </ol>
+    </section>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Usernamecanonical</th>
-                <th>Email</th>
-                <th>Emailcanonical</th>
-                <th>Enabled</th>
-                <th>Salt</th>
-                <th>Password</th>
-                <th>Lastlogin</th>
-                <th>Confirmationtoken</th>
-                <th>Passwordrequestedat</th>
-                <th>Roles</th>
-                <th>Logincount</th>
-                <th>Firstlogin</th>
-                <th>Id</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td><a href="{{ path('admin_user_show', { 'id': user.id }) }}">{{ user.username }}</a></td>
-                <td>{{ user.usernameCanonical }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.emailCanonical }}</td>
-                <td>{% if user.enabled %}Yes{% else %}No{% endif %}</td>
-                <td>{{ user.salt }}</td>
-                <td>{{ user.password }}</td>
-                <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ user.confirmationToken }}</td>
-                <td>{% if user.passwordRequestedAt %}{{ user.passwordRequestedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if user.roles %}{{ user.roles|join(', ') }}{% endif %}</td>
-                <td>{{ user.loginCount }}</td>
-                <td>{% if user.firstLogin %}{{ user.firstLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ user.id }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('admin_user_show', { 'id': user.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_user_edit', { 'id': user.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header text-right">
+                        <a href="{{ absolute_url(path('admin_user_new'))}}" class="btn btn-social btn-primary"><i class="fa fa-plus"></i>Ajouter un nouvel utilisateur</a>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 table-responsive" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="text-center">
+                                <th class="text-center">ID</th>
+                                <th class="text-center">NOMS UTILISATEURS</th>
+                                <th class="text-center">EMAILS</th>
+                                <th class="text-center">PREMIERE</th>
+                                <th class="text-center">DERNIERE</th>
+                                <th class="text-center">NOMBRE</th>
+                                <th class="text-center">ROLE</th>
+                                <th class="text-center">Statut</th>
+                                <th class="text-center">ACTIONS</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td class="text-right">{{ loop.index }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td class="text-center">{{ user.firstLogin|date('Y-m-d H:i:s') }}</td>
+                                    <td class="text-center">{{ user.lastLogin|date('Y-m-d H:i:s') }}</td>
+                                    <td class="text-center">{{ user.loginCount }}</td>
+                                    <td class="text-center">
+                                        {% if user.roles %}
+                                            {% if ('ROLE_ADMIN' in user.roles|join(', ')) %}
+                                                Administrateur
+                                            {% elseif ('ROLE_AUTEUR' in user.roles|join(', ')) %}
+                                                Rédacteur
+                                            {% else %}
+                                                Internaute
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">{% if user.enabled %}<span class="badge badge-success">Actif</span>{% else %}<span class="badge badge-danger">Désactivé</span>{% endif %}</td>
+                                    <td class="text-center">
+                                        <a href="{{ absolute_url(path('admin_user_edit', {'id': user.id })) }}" class="text-primary" title="Modifier/Désactiver"><i class="fa fa-edit"></i></a> |
+                                        <a href="#" class="text-primary" title="Voir le profil"><i class="fa fa-user"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">Aucun utilisateurs</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_user_new') }}">Create a new user</a>
-        </li>
-    </ul>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent ()}}
+    {% javascripts
+        'backend/assassets/vendor_components/datatables.net/js/jquery.dataTables.min.js'
+        'backend/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js'
+        'backend/assets/vendor_plugins/DataTables-1.10.15/ex-js/jszip.min.js'
+        'backend/js/pages/data-table.js'
+        output='backend/js/table.js'
+    %}
+        <script src="{{ absolute_url(asset_url)}}"></script>
+    {% endjavascripts %}
 {% endblock %}

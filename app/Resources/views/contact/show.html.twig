@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Contact</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contact.id }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ contact.localisation }}</td>
+            </tr>
+            <tr>
+                <th>Contact1</th>
+                <td>{{ contact.contact1 }}</td>
+            </tr>
+            <tr>
+                <th>Contact2</th>
+                <td>{{ contact.contact2 }}</td>
+            </tr>
+            <tr>
+                <th>Email1</th>
+                <td>{{ contact.email1 }}</td>
+            </tr>
+            <tr>
+                <th>Email2</th>
+                <td>{{ contact.email2 }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{% if contact.statut %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ contact.slug }}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ contact.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ contact.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ contact.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ contact.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_contact_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('backend_contact_edit', { 'id': contact.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
