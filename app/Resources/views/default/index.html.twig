@@ -1,38 +1,156 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <a href="{{ absolute_url(path('backend')) }}">Backoffice</a>
-        </div>
-    </div>
+
+    <section id="presentation" class="app-feature section-padding">
+        <div class="container">
+            <div class="row text-center">
+                {% for presentation in presentations %}
+                    <div class="section-title wow zoomIn">
+                        <h2>{{ presentation.titre }} <span></span></h2>
+                        <div></div>
+                        <p class="text-justify">
+                             {{ presentation.description|raw }}
+                        </p>
+                    </div>
+                {% endfor %}
+                {% for specialite in specialites %}
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="feature-icon-box">
+                            <div class="icon-box-info">
+                                <div class="icon-box-icon"><i class="fa {{ specialite.icone }}"></i></div>
+                                <h4>{{ specialite.titre }}</h4>
+                                <p class="text-justify">
+                                    {{ specialite.description|raw }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div><!--- END ROW -->
+        </div><!--- END CONTAINER -->
+    </section>
+
+    <section id="service" class="why-choose-us section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12 mt60">
+                    <h3 class="why-choose-title">Nos principaux services</h3>
+                    {% for service in services %}
+                        <div class="single_why">
+                            <div class="why-box-icon"><i class="fa fa-star-o"></i></div>
+                            <h4>{{ service.titre }}</h4>
+                            <p class="text-justify">
+                                {{ service.description|raw }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div><!--- END COL -->
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="why_us_img">
+                        <img src="assets/img/2-mbl.png" class="img-responsive" alt="" />
+                    </div>
+                </div><!--- END COL -->
+            </div><!--- END ROW -->
+        </div><!--- END CONTAINER -->
+    </section>
+
+    <section id="produit" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6  col-sm-12 col-xs-12 mt60">
+                    <div class="description_text_img">
+                        <img src="assets/img/black-mbl.jpg" class="img-responsive" alt="" />
+                    </div>
+                </div><!--- END COL -->
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    {% for produit in produits %}
+                        <div class="description_text">
+                            <h3>{{ produit.titre }}</h3>
+                            {{ produit.description|raw }}
+                        </div>
+                    {% endfor %}
+                </div><!--- END COL -->
+
+            </div><!--- END ROW -->
+        </div><!--- END CONTAINER -->
+    </section>
+
+    <section id="demo" class="app-download section-padding" style="background-image: url(assets/img/bg/download-bg.jpg);  background-size:cover; background-position: center center;background-attachment:fixed;">
+        <div class="container">
+            <div class="row text-center">
+                <div class="section-title wow zoomIn">
+                    <h2 class="section-title-white wow zoomIn">ARFIS<span>GED</span> </h2>
+                    <div></div>
+                    <p class="section-title-white">
+                        Le progiciel ARFISGED est un outil de travail complet, qui intègre à la fois le Système de Gestion Physique des Archives et la Gestion Électronique des documents (GED)
+                    </p>
+                </div>
+                <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 text-center">
+                    <a href="#"><img src="assets/img/arfisged-demo.png" alt="" /></a>
+                </div>
+            </div><!--- END ROW -->
+        </div><!--- END CONTAINER -->
+    </section>
+
+    <section id="contact" class="contact-us section-padding">
+        <div class="container">
+            <div class="row ">
+                <div class="section-title text-center wow zoomIn">
+                    <h2>Nous <span>contacter</span></h2>
+                    <div></div>
+                    <p></p>
+                </div>
+                <div class="col-md-4">
+                    {% for contact in contacts %}
+                        <div class="contact-info">
+                            <ul>
+                                <li>
+                                    <h4>Situation géographique</h4>
+                                    <p>{{ contact.localisation }}</p>
+                                </li>
+                                <li>
+                                    <h4>Contact</h4>
+                                    <p>{{ contact.contact1 }}  <br> {{ contact.contact2 }}</p>
+                                </li>
+                                <li>
+                                    <h4>Ecrivez nous</h4>
+                                    <p>
+                                        {{ contact.email1 }} <br> {{ contact.email2 }}
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12 mt60">
+                    <div class="contact">
+                        <form method="post" enctype="multipart/form-data" action="{{ absolute_url(path('contact_email')) }}">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <input type="text" name="arfisNom" class="form-control" id="first-name" placeholder="Nom et prenoms ou entreprise" required="required">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="email" name="arfisEmail" class="form-control" id="email" placeholder="Email" required="required">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="text" name="arfisObjet" class="form-control" id="objet" placeholder="Objet" required="required">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <textarea rows="4" name="arfisMessage" class="form-control" id="description" placeholder="Votre message" required="required"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="actions">
+                                        <input type="submit" value="Envoyer" name="submit" id="submitButton" class="btn btn-lg btn-contact-bg" title="Envoyer votre message" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- END COL -->
+            </div><!-- END ROW -->
+        </div><!--- END CONTAINER -->
+    </section>
+
 {% endblock %}
 
-{% block stylesheets %}
-<style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
-
-    @media (min-width: 768px) {
-        #wrapper { width: 80%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
-
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
-</style>
-{% endblock %}
