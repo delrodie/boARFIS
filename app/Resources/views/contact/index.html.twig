@@ -66,11 +66,11 @@
 {% block javascripts %}
     {{ parent ()}}
     {% javascripts
-        'backend/assets/vendor_components/datatables.net/js/jquery.dataTables.min.js'
-        'backend/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js'
-        'backend/assets/vendor_plugins/DataTables-1.10.15/ex-js/jszip.min.js'
-        'backend/js/pages/data-table.js'
-        output='backend/js/table.js'
+        'backoffice/assets/vendor_components/datatables.net/js/jquery.dataTables.min.js'
+        'backoffice/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js'
+        'backoffice/assets/vendor_plugins/DataTables-1.10.15/ex-js/jszip.min.js'
+        'backoffice/js/pages/data-table.js'
+        output='backoffice/js/table.js'
     %}
         <script src="{{ absolute_url(asset_url)}}"></script>
     {% endjavascripts %}
